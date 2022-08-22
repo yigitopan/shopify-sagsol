@@ -9,11 +9,11 @@ const deleteOrder = async(req, res, next) => {
     let order;
     let customerID;
     const {orderToCancel, orderOwnerID} = req.body;
+    const host = req.get('host');
+
     try {
         order =  await shopify.order.get(orderToCancel)
         customerID = order.customer.id
-        const host = req.get('host');
-        console.log(host)
 
         if (customerID!==orderOwnerID){
             const error = new Error("Customer id doesn't match");
@@ -33,7 +33,7 @@ const deleteOrder = async(req, res, next) => {
     catch (err){
         return next(err);
     }
-    res.status(200).json({message:'deleted'});
+    res.status(200).json({message:host});
 }
 
 module.exports = {

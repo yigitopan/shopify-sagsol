@@ -9,8 +9,6 @@ const deleteOrder = async(req, res, next) => {
     let order;
     let customerID;
     const {orderToCancel, orderOwnerID} = req.body;
-    const host = req.get('host');
-
     try {
         order =  await shopify.order.get(orderToCancel)
         customerID = order.customer.id
@@ -33,7 +31,7 @@ const deleteOrder = async(req, res, next) => {
     catch (err){
         return next(err);
     }
-    res.status(200).json({message:host});
+    res.status(200).json({message:'deleted'});
 }
 
 module.exports = {

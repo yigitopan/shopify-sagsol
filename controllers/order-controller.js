@@ -12,6 +12,8 @@ const deleteOrder = async(req, res, next) => {
     try {
         order =  await shopify.order.get(orderToCancel)
         customerID = order.customer.id
+        const host = req.get('host');
+        console.log(host)
 
         if (customerID!==orderOwnerID){
             const error = new Error("Customer id doesn't match");

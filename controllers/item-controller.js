@@ -15,7 +15,7 @@ const getItems = async(req, res, next) => {
 
         axios(config)
             .then(function (response) {
-                data = JSON.stringify(response)
+                data = JSON.stringify(response.data)
             })
             .catch(function (error) {
                 errorM = error;

@@ -2,7 +2,7 @@
 const request = require('request');
 
 const getItems = async(req, res, next) => {
-
+    let body;
     try {
         const options = {
             'method': 'GET',
@@ -13,7 +13,7 @@ const getItems = async(req, res, next) => {
             }
         };
         request(options, function (error, response) {
-            console.log(response.body)
+            body = response.body
             if (error) throw new Error(error);
             console.log(response.body);
         });
@@ -22,7 +22,7 @@ const getItems = async(req, res, next) => {
     catch (err){
         return next(err);
     }
-    res.status(200).json({message:''});
+    res.status(200).json({message:body});
 }
 
 module.exports = {

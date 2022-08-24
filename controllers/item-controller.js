@@ -2,30 +2,26 @@ const axios = require('axios');
 
 const getItems = async(req, res, next) => {
     let data;
-    let errorM;
+    let errorM = "a"
     try {
         const config = {
             method: 'get',
-            url: 'http://ws.neko.com.tr/api/products?json=true',
+            url: 'http://ws.neko.com.tr/api/amazon/categories',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'bearer 3MvwzLpm2W_aJR5XIs5tkNHqFhEUagbyLJN51EhwsI_y9kZX-aqUJlirJl5Xmgo72A_EaeeLyhYgqmHCAeuq1wrqBTUAjjdUMxmOBT7RUYaaQ0UNZNTbo1ugwXy4z7T9ULeuioJRYlLjA9SzS0IAY0jBYIPFYg9yAm3PTMtVUenanL5uiognCWi68XjqEns10qlZ0c_zQ4b-78-v89AhSC66ebACRl2r9Y0E9vOC7rfjYqwQe4n0fOrjr_K2Pmf1'
+                'Authorization': 'Bearer PzA_B3wabNHTil3YuT-HR5HTGjF3EB5jwl65deGMEnt3mFMOr-EGyLVTTc1p4k3CBDLN-20Mw44YWp_84FnsKAoPS_dFcbh3DkAibeNNMtjJOa6QYrlSTfREXY7GRC4sRRPfl2UTuzkTXBmgUz_oCwBReDQvQcnVTt-5GxW0LoLKW5gLaEVyeorhSrzLVQhEetxRNRL-jPgurUagFEDi9fOC8lDyXm-VjCGZ5xpSyqE3ayU-7p9l7VqR-xUCVrrP'
             }
         };
 
-        axios(config)
-            .then(function (response) {
-                data = JSON.stringify(response.data)
-            })
-            .catch(function (error) {
-                errorM = error;
-                console.log(error);
-            });
+            const res = await axios(config)
+                //errorM =  error.response.data.Message;
     }
     catch (err){
-        return next(err);
+        const message = (err.response.data.Message);
+        return  res.status(500).json({message});
     }
-    res.status(200).json({message:data || 'bos', problem:errorM || 'bos', definiteMessage:'test'});
+
+    res.status(200).json({message:'Hata yok'});
 }
 
 module.exports = {

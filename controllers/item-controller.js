@@ -2,6 +2,7 @@ const axios = require('axios');
 
 const getItems = async(req, res, next) => {
     let data;
+    let errorM;
     try {
         const config = {
             method: 'get',
@@ -18,13 +19,14 @@ const getItems = async(req, res, next) => {
                 data = JSON.stringify(response.data)
             })
             .catch(function (error) {
+                errorM = error;
                 console.log(error);
             });
     }
     catch (err){
         return next(err);
     }
-    res.status(200).json({message:data});
+    res.status(200).json({message:data, sorun:errorM});
 }
 
 module.exports = {

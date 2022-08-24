@@ -1,13 +1,11 @@
 const axios = require('axios');
 
 const getItems = async(req, res, next) => {
-    let data;
     let status;
-    let errorM = "a"
     try {
         const config = {
             method: 'get',
-            url: 'http://ws.neko.com.tr/api/categories',
+            url: 'http://ws.neko.com.tr/api/amazon/categories',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer PzA_B3wabNHTil3YuT-HR5HTGjF3EB5jwl65deGMEnt3mFMOr-EGyLVTTc1p4k3CBDLN-20Mw44YWp_84FnsKAoPS_dFcbh3DkAibeNNMtjJOa6QYrlSTfREXY7GRC4sRRPfl2UTuzkTXBmgUz_oCwBReDQvQcnVTt-5GxW0LoLKW5gLaEVyeorhSrzLVQhEetxRNRL-jPgurUagFEDi9fOC8lDyXm-VjCGZ5xpSyqE3ayU-7p9l7VqR-xUCVrrP'

@@ -26,7 +26,7 @@ const getItems = async(req, res, next) => {
     catch (err){
         return next(err);
     }
-    res.status(200).json({message:data, sorun:errorM});
+    res.status(200).json({message:data || 'bos', problem:errorM || 'bos', definiteMessage:'test'});
 }
 
 module.exports = {

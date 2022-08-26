@@ -1,14 +1,18 @@
 const axios = require('axios');
+const qs = require('qs');
 
 const getItems = async(req, res, next) => {
+    let token;
     let status;
+
+    token = await getToken();
     try {
         const config = {
             method: 'get',
-            url: 'http://ws.neko.com.tr/api/amazon/categories',
+            url: 'http://ws.neko.com.tr/api/amazon/categories?json=true',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer PzA_B3wabNHTil3YuT-HR5HTGjF3EB5jwl65deGMEnt3mFMOr-EGyLVTTc1p4k3CBDLN-20Mw44YWp_84FnsKAoPS_dFcbh3DkAibeNNMtjJOa6QYrlSTfREXY7GRC4sRRPfl2UTuzkTXBmgUz_oCwBReDQvQcnVTt-5GxW0LoLKW5gLaEVyeorhSrzLVQhEetxRNRL-jPgurUagFEDi9fOC8lDyXm-VjCGZ5xpSyqE3ayU-7p9l7VqR-xUCVrrP'
+                'Authorization': `bearer ${token}`
             }
         };
         const res = await axios(config)
@@ -17,9 +21,37 @@ const getItems = async(req, res, next) => {
     catch (err){
         const error = err;
         const message = (err.response.data.Message);
-        return  res.status(500).json({FatalError:message || error});
+        return  res.status(500).json({Error:error, Message:message || 'no message'});
     }
     res.status(200).json({status:status});
+}
+
+const getToken = async(req,res,next) => {
+    let token;
+    const data = qs.stringify({
+        'grant_type': 'password',
+        'username': '120.01.6372',
+        'password': 'Nk40999950948'
+    });
+    const config = {
+        method: 'post',
+        url: 'http://ws.neko.com.tr/token',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data : data
+    };
+
+    try {
+     const res = await axios(config)
+     token = res.data.access_token
+    }
+    catch (err){
+        console.log(error);
+    }
+
+    return token;
 }
 
 module.exports = {

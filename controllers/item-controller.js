@@ -24,7 +24,7 @@ const getItems = async(req, res, next) => {
         const message = (err.response.data.Message);
         return  res.status(500).json({Error:error, Message:message || 'no message'});
     }
-    res.status(200).json({status:status});
+    res.status(200).json({res:res});
 }
 
 const getToken = async(req,res,next) => {

@@ -130,7 +130,86 @@ const getPrices = async(req, res, next) => {
     res.status(200).json({data:data, status:status});
 }
 
+const getGroups = async(req, res, next) => {
+    let token;
+    let status;
+ 
+    token = await getToken();
+    try {
+        const config = {
+            method: 'get',
+            url: 'http://ws.neko.com.tr/api/amazon/groups',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `bearer ${token}`
+            }
+        };
+        const res = await axios(config)
+        status = res.status;
+        data = res.data;
+    }
+    catch (err){
+        const error = err;
+        const message = (err.response.data.Message);
+        return  res.status(500).json({Error:error, Message:message || 'no message'});
+    }
+    console.log("Cekildi")
+    res.status(200).json({data:data, status:status});
+}
 
+const getOEs = async(req, res, next) => {
+    let token;
+    let status;
+ 
+    token = await getToken();
+    try {
+        const config = {
+            method: 'get',
+            url: 'http://ws.neko.com.tr/api/amazon/oenumbers',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `bearer ${token}`
+            }
+        };
+        const res = await axios(config)
+        status = res.status;
+        data = res.data;
+    }
+    catch (err){
+        const error = err;
+        const message = (err.response.data.Message);
+        return  res.status(500).json({Error:error, Message:message || 'no message'});
+    }
+    console.log("Cekildi")
+    res.status(200).json({data:data, status:status});
+}
+
+const getImages = async(req, res, next) => {
+    let token;
+    let status;
+ 
+    token = await getToken();
+    try {
+        const config = {
+            method: 'get',
+            url: 'http://ws.neko.com.tr/api/amazon/images',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `bearer ${token}`
+            }
+        };
+        const res = await axios(config)
+        status = res.status;
+        data = res.data;
+    }
+    catch (err){
+        const error = err;
+        const message = (err.response.data.Message);
+        return  res.status(500).json({Error:error, Message:message || 'no message'});
+    }
+    console.log("Cekildi")
+    res.status(200).json({data:data, status:status});
+}
 
 const getToken = async(req,res,next) => {
     let token;
@@ -161,5 +240,5 @@ const getToken = async(req,res,next) => {
 }
 
 module.exports = {
-    getCategories, getProducers, getProducts, getPrices
+    getCategories, getProducers, getProducts, getPrices, getGroups, getOEs, getImages
 }

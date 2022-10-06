@@ -1,16 +1,15 @@
 const axios = require('axios');
 const qs = require('qs');
 
-
-const getItems = async(req, res, next) => {
+const getCategories = async(req, res, next) => {
     let token;
     let status;
-
+ 
     token = await getToken();
     try {
         const config = {
             method: 'get',
-            url: 'http://ws.neko.com.tr/api/amazon/categories?json=true',
+            url: 'http://ws.neko.com.tr/api/amazon/categories',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `bearer ${token}`
@@ -18,14 +17,100 @@ const getItems = async(req, res, next) => {
         };
         const res = await axios(config)
         status = res.status;
+        data = res.data;
     }
     catch (err){
         const error = err;
         const message = (err.response.data.Message);
         return  res.status(500).json({Error:error, Message:message || 'no message'});
     }
-    res.status(200).json({res:res});
+    console.log("Cekildi")
+    res.status(200).json({data:data});
 }
+
+
+const getProducers = async(req, res, next) => {
+    let token;
+    let status;
+ 
+    token = await getToken();
+    try {
+        const config = {
+            method: 'get',
+            url: 'http://ws.neko.com.tr/api/amazon/producers',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `bearer ${token}`
+            }
+        };
+        const res = await axios(config)
+        status = res.status;
+        data = res.data;
+    }
+    catch (err){
+        const error = err;
+        const message = (err.response.data.Message);
+        return  res.status(500).json({Error:error, Message:message || 'no message'});
+    }
+    console.log("Cekildi")
+    res.status(200).json({data:data});
+}
+
+const getProducts = async(req, res, next) => {
+    let token;
+    let status;
+ 
+    token = await getToken();
+    try {
+        const config = {
+            method: 'get',
+            url: 'http://ws.neko.com.tr/api/amazon/products',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `bearer ${token}`
+            }
+        };
+        const res = await axios(config)
+        status = res.status;
+        data = res.data;
+    }
+    catch (err){
+        const error = err;
+        const message = (err.response.data.Message);
+        return  res.status(500).json({Error:error, Message:message || 'no message'});
+    }
+    console.log("Cekildi")
+    res.status(200).json({data:data});
+}
+
+const getPrices = async(req, res, next) => {
+    let token;
+    let status;
+ 
+    token = await getToken();
+    try {
+        const config = {
+            method: 'get',
+            url: 'http://ws.neko.com.tr/api/amazon/prices',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `bearer ${token}`
+            }
+        };
+        const res = await axios(config)
+        status = res.status;
+        data = res.data;
+    }
+    catch (err){
+        const error = err;
+        const message = (err.response.data.Message);
+        return  res.status(500).json({Error:error, Message:message || 'no message'});
+    }
+    console.log("Cekildi")
+    res.status(200).json({data:data});
+}
+
+
 
 const getToken = async(req,res,next) => {
     let token;
@@ -56,5 +141,5 @@ const getToken = async(req,res,next) => {
 }
 
 module.exports = {
-    getItems
+    getCategories, getProducers, getProducts, getPrices
 }

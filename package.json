@@ -18,5 +18,8 @@
     "request": "^2.88.2",
     "shopify-api-node": "^3.11.0"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
 }

@@ -1,5 +1,6 @@
 const axios = require('axios');
 const qs = require('qs');
+const fs = require('fs');
 
 const getCategories = async(req, res, next) => {
     let token;
@@ -53,7 +54,7 @@ const getProducers = async(req, res, next) => {
         return  res.status(500).json({Error:error, Message:message || 'no message'});
     }
     console.log("Cekildi")
-    res.status(200).json({data:data});
+    res.status(200).json({data:data, status:status});
 }
 
 const getProducts = async(req, res, next) => {
@@ -70,9 +71,28 @@ const getProducts = async(req, res, next) => {
                 'Authorization': `bearer ${token}`
             }
         };
+        var obj = {
+            products: []
+         };
+
         const res = await axios(config)
         status = res.status;
         data = res.data;
+        
+        /*
+        data.map(data => {
+            obj.products.push(data)
+        })
+
+        fs.writeFile ("products.json", JSON.stringify(obj,null,'\t'), function(err) {
+            if (err) throw err;
+            console.log('complete');
+            }
+        );
+        
+        */
+
+
     }
     catch (err){
         const error = err;
@@ -107,7 +127,7 @@ const getPrices = async(req, res, next) => {
         return  res.status(500).json({Error:error, Message:message || 'no message'});
     }
     console.log("Cekildi")
-    res.status(200).json({data:data});
+    res.status(200).json({data:data, status:status});
 }
 
 
